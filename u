@@ -1,66 +1,65 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مثال على عرض المزيد</title>
+    <title>عرض المزيد/أقل</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
             direction: rtl;
-            padding: 20px;
+            text-align: right;
+            margin: 20px;
         }
         .section {
-            background-color: #fff;
-            padding: 20px;
             margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .short-text {
-            display: block;
+        .text {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* عرض أول سطرين */
+            -webkit-box-orient: vertical;
         }
-        .full-text {
-            display: none;
+        .text.expanded {
+            -webkit-line-clamp: unset; /* إظهار النص كاملاً عند التوسيع */
         }
-        .show-more {
-            color: #007bff;
+        .toggle-btn {
             cursor: pointer;
-            text-decoration: underline;
+            color: blue;
+            border: none;
+            background: none;
+            padding: 0;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-
     <div class="section">
-        <h2>المقطع الأول</h2>
-        <p class="short-text">هذه هي الجملة الأولى من المقطع الأول. وهذه هي الجملة الثانية من المقطع الأول.</p>
-        <p class="full-text">هذه هي الجملة الثالثة من المقطع الأول. وهذه هي الجملة الرابعة من المقطع الأول. وهذه هي الجملة الخامسة من المقطع الأول. وهذه هي الجملة السادسة من المقطع الأول. وهذه هي الجملة السابعة من المقطع الأول. وهذه هي الجملة الثامنة من المقطع الأول. وهذه هي الجملة التاسعة من المقطع الأول. وهذه هي الجملة العاشرة من المقطع الأول.</p>
-        <span class="show-more" onclick="toggleText(this)">عرض المزيد</span>
+        <div class="text" id="text1">
+            هذه أول جملة من النص الأول. هذه هي الجملة الثانية من النص الأول.
+            بقية النص هنا: الجملة الثالثة. الجملة الرابعة. الجملة الخامسة. الجملة السادسة. الجملة السابعة. الجملة الثامنة. الجملة التاسعة. الجملة العاشرة.
+        </div>
+        <button class="toggle-btn" onclick="toggleText('text1', this)">عرض المزيد</button>
     </div>
 
     <div class="section">
-        <h2>المقطع الثاني</h2>
-        <p class="short-text">هذه هي الجملة الأولى من المقطع الثاني. وهذه هي الجملة الثانية من المقطع الثاني.</p>
-        <p class="full-text">هذه هي الجملة الثالثة من المقطع الثاني. وهذه هي الجملة الرابعة من المقطع الثاني. وهذه هي الجملة الخامسة من المقطع الثاني. وهذه هي الجملة السادسة من المقطع الثاني. وهذه هي الجملة السابعة من المقطع الثاني. وهذه هي الجملة الثامنة من المقطع الثاني. وهذه هي الجملة التاسعة من المقطع الثاني. وهذه هي الجملة العاشرة من المقطع الثاني.</p>
-        <span class="show-more" onclick="toggleText(this)">عرض المزيد</span>
+        <div class="text" id="text2">
+            هذه أول جملة من النص الثاني. هذه هي الجملة الثانية من النص الثاني.
+            بقية النص هنا: الجملة الثالثة. الجملة الرابعة. الجملة الخامسة. الجملة السادسة. الجملة السابعة. الجملة الثامنة. الجملة التاسعة. الجملة العاشرة.
+        </div>
+        <button class="toggle-btn" onclick="toggleText('text2', this)">عرض المزيد</button>
     </div>
 
     <script>
-        function toggleText(element) {
-            const shortText = element.previousElementSibling.previousElementSibling;
-            const fullText = element.previousElementSibling;
-            if (fullText.style.display === "none") {
-                fullText.style.display = "block";
-                element.textContent = "عرض أقل";
+        function toggleText(textId, button) {
+            const textElement = document.getElementById(textId);
+            textElement.classList.toggle('expanded');
+            if (textElement.classList.contains('expanded')) {
+                button.textContent = 'عرض أقل';
             } else {
-                fullText.style.display = "none";
-                element.textContent = "عرض المزيد";
+                button.textContent = 'عرض المزيد';
             }
         }
     </script>
-
 </body>
 </html>
